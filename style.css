@@ -1,0 +1,32 @@
+/* Custom styles for the LED Dashboard */
+.stApp {
+  background-color: #f9fafb;
+}
+
+.stButton > button {
+  background-color: #1e3a8a;
+  color: white;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border: none;
+}
+
+.stButton > button:hover {
+  background-color: #1e40af;
+}
+
+.stSelectbox > div > div {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.stTextInput > div > div > input {
+  background-color: white;
+  border-radius: 5px;
+}
+
+.stDataFrame {
+  border-radius: 10px;
+  overflow: hidden;
+}
