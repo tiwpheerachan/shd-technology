@@ -13,13 +13,33 @@ from datetime import datetime
 import io
 import os
 from web_scraping import scrape_led_data
+from fpdf import FPDF
 
-# ใช้ FPDF2 แทน reportlab (FPDF2 รองรับภาษาไทย)
-try:
-    from fpdf import FPDF
-except ImportError:
-    st.error("กรุณาติดตั้ง FPDF2 ด้วยคำสั่ง: pip install fpdf2")
+# ตรวจสอบว่าฟอนต์มีอยู่จริงหรือไม่
+FONT_PATH = "NotoSansThai-Regular.ttf"
 
+if not os.path.exists(FONT_PATH):
+    st.error("❌ ไม่พบไฟล์ฟอนต์ NotoSansThai-Regular.ttf กรุณาวางไว้ในโฟลเดอร์เดียวกับไฟล์นี้")
+else:
+    # เริ่มสร้าง PDF
+    pdf = FPDF()
+    pdf.add_page()
+    
+    # ✅ ใช้ฟอนต์ภาษาไทยที่รองรับ Unicode
+    pdf.add_font("NotoSansThai", "", FONT_PATH, uni=True)
+    pdf.set_font("NotoSansThai", size=14)
+    
+    # ✅ พิมพ์ข้อความไทยได้
+    pdf.cell(200, 10, txt="รายงานข้อมูลภาษาไทยจากกรมบังคับคดี", ln=True)
+
+    # ✅ บันทึกไฟล์
+    output_path = "thai_report.pdf"
+    pdf.output(output_path)
+
+    # ✅ Streamlit แสดงปุ่มดาวน์โหลด
+    with open(output_path, "rb") as f:
+        st.download_button("📄 ดาวน์โหลด PDF", f, file_name=output_path)
+        
 # Main application
 def main():
     # Page configuration
